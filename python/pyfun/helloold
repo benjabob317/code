@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+import sys as s
+import random as r
+import skilstak.colors as c
+import time as t
+def randcolor(message):
+    print(c.clear + c.rc() + message + c.reset)
+def nyan(message):
+    print(c.clear())   
+    while True:
+        print(c.rc() + message, end = " ")
+def rejection():
+    x=str(input("I don't like repeating what you say. Give me some coffee or I will shoot you a trillion times! "))
+    if x == "yes":
+        print(c.clear)
+        print(c.red + "Thank you. NOW GO AWAY!!!!")
+    else:
+        print(c.clear)
+        while True:
+            print(c.rc() + "BANG POW",)
+def spammyprint(msg):
+    while True:
+        print(c.rc() + msg)
+
+def randprint(msg):
+    for x in range(0, r.randint(0, 10)):
+        print(c.rc() + msg)

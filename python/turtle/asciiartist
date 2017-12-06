@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+#curses window is 80 by 22
+import function_bank as f #math behind the program
+import sys
+import curses as s
+import time as t
+c = s.initscr()
+x, y = 40, 11
+direc = 90
+xcoords = []
+ycoords = []
+args = sys.argv
+inputs =[]
+char = ''
+def newdiaglinecoords(direction, length):
+    global x
+    global y
+    global xcoords
+    global ycoords
+    if len(xcoords) > 0 or len(ycoords) > 0:
+        while len(xcoords) > 0:
+            xcoords.remove(xcoords[0])
+        while len(ycoords) > 0:
+            ycoords.remove(ycoords[0])
+    slope = f.getslope(direction)
+    ylen, xlen = f.reallengths(length, slope, direction)
+    if abs(xlen) > abs(ylen):
+        reps = abs(xlen)
+    else:
+        reps = abs(ylen)
+    reps = round(reps)
+    for w in range(0, reps):
+        xcoords.append(x + ((xlen/reps)*(w+1)))
+        ycoords.append(y + (((0 - ylen)/reps)*(w+1)))
+
+def diaglinechar(direction):
+    global char
+    if 337.5 < direction < 360 or 0 < direction < 22.5 or 157.5 < direction < 202.5:
+        char = '|'
+    if 67.5 < direction < 112.5 or 247.5 < direction < 292.5:
+        char = '='
+    if 22.5 <= direction <= 67.5 or 202.5 <= direction <= 247.5:
+        char = '/'
+    if 112.5 <= direction <= 157.5:
+        char = '\\'
+
+def newdiagline(direction, length):
+    """core function of this program"""
+    global x
+    global y
+    global xcoords
+    global ycoords
+    global char
+    if direction < 0:
+        direction = direction + 360
+    newdiaglinecoords(direction, length)
+    diaglinechar(direction)
+    for q in range(0, len(xcoords)):
+        c.addstr(round(ycoords[q]), round(xcoords[q]), char)
+        t.sleep(0.5)
+        c.refresh()
+    x = xcoords[len(xcoords) - 1]
+    y = ycoords[len(ycoords) - 1]
+def newstraightline(direction, length):
+    #length better be an integer OR ELSE!!!!!!!
+    global x
+    global y
+    if direction == 0:
+        for z in range(0, length):
+            c.addstr(round(y), round(x), '|')
+            t.sleep(0.25)
+            c.refresh()
+            y += 0.45
+    if direction == 90:
+        for z in range(0, length):
+            c.addstr(round(y), round(x), '=')
+            t.sleep(0.5)
+            c.refresh()
+            x += 1
+    if direction == 180:
+        for z in range(0, length):
+            c.addstr(round(y), round(x), '|')
+            t.sleep(0.25)
+            c.refresh()
+            y -= 0.45
+    if direction == 270:
+        for z in range(0, length):
+            c.addstr(round(y), round(x), '=')
+            t.sleep(0.5)
+            c.refresh()
+            x -= 1
+def forward(length):
+    """make a line. for purposes of easiness of usage."""
+    global direc
+    if direc >= 360:
+        direc -= 360
+    if direc < 0:
+        direc += 360
+    if direc != 0 and direc != 90 and direc != 180 and direc != 270:
+        newdiagline(direc, length)
+    else:
+        newstraightline(direc, length)
+def turn(degrees):
+    """rotate and stuff"""
+    global direc
+    direc += degrees
+#def decode():
+    #jfor x in range(0, len(inputs)):
+forward(5)   
+turn(44)
+forward(5)
+s.endwin()

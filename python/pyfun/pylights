@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+import skilstak.colors as c
+from time import sleep
+import skilstak.pylights as pylights
+import random as r
+import sys
+l = sys.argv
+
+lights = pylights.Set()
+
+delay = 0.1
+
+n = 0
+def rand():
+    global n
+    n = 0
+    while True:
+        n = r.randint(0, 7)
+        lights[n].color = c.random()
+        sleep(delay)
+        lights.update()
+def cylon():
+    while True:
+        for x in range(0, 7):
+            n = x
+            lights[n].color = c.red
+            sleep(delay)
+            lights.update()
+            lights[n].color = c.base03
+        for x in range(7, 0, -1):
+            n = x
+            lights[n].color = c.red
+            sleep(delay)
+            lights.update()
+            lights[n].color = c.base03
+def rainbow():
+    raincolors = [c.r, c.o, c.y, c.g, c.c, c.b, c.v, c.m]
+    for x in range(0, 8):
+        lights[x].color = raincolors[x]
+        lights.update()
+        sleep(delay)
+
+if len(l) >= 2:
+    if len(l) >= 3:
+        delay = float(l[2])
+    else:
+        delay = 0.5
+    if l[1] == "rand":
+        rand()
+    elif l[1] == "cylon":
+        cylon()
+    elif l[1] == "rainbow":
+        rainbow()
+    elif l[1] == "randfunc":
+        funcl = ["cylon", "rand", "rainbow"]
+        rf = r.choice(funcl)
+        if rf == "cylon":
+            cylon()
+        elif rf == "rand":
+            rand()
+        elif rf == "rainbow":
+            rainbow()
+    else:
+        print(c.r + "Give me a real function or you will never see the light of day again!")
+elif len(l) == 1:
+    print(c.r + "I need a function to work, you pathetic excuse for a human being! DDDDDIIIIIIEEEEEEEEEEE!!!!!!!!!!!!")

@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+import colors as c
+score = 0
+def asklikes(food):
+    global score
+    answer = input(c.b3 + "Do you like " + food + "?" + "\n> " + c.cyan)
+    if "yes" in answer.lower().strip() or "yeah" in answer.lower().strip() or "yep" in answer.lower().strip():
+        print(c.green + "GOOD, I WON'T KILL YOU!")
+        score += 1
+    elif "no" in answer.lower().strip() or "nope" in answer.lower().strip() or "nein" in answer.lower().strip():
+        print(c.red + "DIE IN PAIN, YOU NON-" + food.upper() + " LOVER!!!!!!!!!!!!!")
+    else:
+        print(c.yellow + "Make sure yes or no is in your answer to receive a proper, morbid response!")
+asklikes("waffles")
+asklikes("pancakes")
+asklikes("french toast")
+if score < 2:
+    print(c.r + "YOU MAKE ME TRIGGERED!!!!! GET ON OVER TO THE SLAUGHTERHOUSE!!!!!!!!")
+else:
+    print(c.green + "You can live... for now.")

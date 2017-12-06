@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+#based of the Magical Crops Minecraft mod
+sell_values = { #for products as well as materials, 80% of buy values
+        'grass_seeds': .8,
+        'grass': 3.2,
+        'green_essence': 40, #green essence plant drops a few, 2-4
+        'green_essence_seeds': 330, #green essence plant drops 1-2
+}
+
+buy_values = { #mainly for materials
+        'grass_seeds': 1,
+        'grass': 4,
+        'green_essence': 50,
+        'green_essence_seeds': 410,
+        'crafting_station': 100
+        'magic_rock': 2000,
+}
+
+service_charges = {
+        'crafting_minute': 5,
+        'weak_stone_use': 5,
+        'reg_stone_use': 10,
+        'strong_stone_use': 20,
+        'extreme_stone_use': 40
+}
+
+crafting_recipes = {
+        'green_essence_seeds': ['8green_essence', '1grass_seeds'],
+        'weak_stone': ['8green_essence', '1magic_rock']
+}

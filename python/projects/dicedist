@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+import sys
+import skilstak.colors as c
+die = [[1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1]] #distribution of 1 dice roll, first item in each sublist is the number and the second item is the frequency, used to make other distributions
+nextdist = [] #not fully finished distribution of next level, global list for functions
+
+def freqcounter(n): #scans nextdist to determine how many times n occurs
+    global nextdist
+    counter = 0
+    for scanner in nextdist:
+        if n in scanner[0]:
+            counter += scanner[1]
+    return counter
+
+def freqdist(n): #produces distribution of the sum of n dice rolls, with frequencies (not probabilities)
+    global die
+    global nextdist
+    if n == 1:
+        return die
+    elif n < 1:
+        return c.r + "Please enter an integer greater than zero" + c.x
+    elif int(n) != n:
+        return c.r + "Please enter an integer greater than zero" + c.x
+    else:
+        dist = die
+        for x in range(1, n): #adds a die to distribution until it is a distribution of the sum of n dice
+            nextdist = []
+            for y in dist: #creates hypothetical distribution of current distribution with an extra dice roll
+                nextdist.append([[(y[0] + 1), (y[0] + 2), (y[0] + 3), (y[0] + 4), (y[0] + 5), (y[0] + 6)], y[1]])
+            dist = [] #clear distribution in preparation for relacing it 
+            for var in range(nextdist[0][0][0], (nextdist[-1][0][-1] + 1)): #finds frequencies of all numbers in new distribution and draws new distribution
+                dist.append([var, freqcounter(var)])
+        return dist
+
+def probdist(n): #converts frequencies in distribution to probabilities
+    dist = freqdist(n)
+    for x in dist:
+        x.append(x[1]/(6**n))
+        x.remove(x[1])
+    return dist
+
+def combos(x, n): #amount of combinations that lead to x if n dice rolled
+    dist = freqdist(n)
+    if x >= n:
+        return str(dist[x-n][1]) + " out of " + str(6**n) + "possibilities"
+    else:
+        return c.r + "You can't get " + str(x) + " from summing " + str(n) + " dice rolls." + c.x
+
+def pdf(x, n): #finds probability of x if n dice rolled
+    dist = probdist(n)
+    if x >= n: 
+        return dist[x-n][1]
+    else:
+        return c.r + "You can't get " + str(x) + " from summing " + str(n) + " dice rolls." + c.x
+
+def cdf(x, n): #finds probability of x or less if n dice rolled
+    dist = probdist(n)
+    counter = 0
+    for y in range(x, n-1, -1):
+        counter += dist[y-n][1]
+    if counter >= 1:
+        counter = 1
+    return counter
+
+def stats(n): #finds mean and standard deviation of the sum of n dice rolls
+    return "Mean = " + str(3.5*n) + " and standard deviation = " + str(((2.9+(1/60))*n)**.5)
+
+while True: #sinple interface, remove if using program for functions in other programs
+    func = input("Function? ")
+    if func == "freqdist" or func == "frequency distribution":
+        x = int(input("Number of dice rolled? "))
+        print(freqdist(x))
+    elif func == "probdist" or func == "probability distribution":
+        x = int(input("Number of dice rolled? "))
+        print(probdist(x))
+    elif func == "pdf":
+        x = int(input("Number of dice rolled? "))
+        y = int(input("X value? "))
+        print(pdf(y, x))
+    elif func == "cdf":
+        x = int(input("Number of dice rolled? "))
+        y = int(input("X value? "))
+        print(pdf(y, x))
+    elif func == "stats":
+        x = int(input("Number of dice rolled? "))
+        print(stats(x))
+    elif func == "combos":
+        x = int(input("Number of dice rolled? "))
+        print(combos(x))
+    else:
+        print(c.r + "Valid functions include freqdist, probdist, pdf, cdf, and stats." + c.x)

@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+#pulse_with_modulation
+import RPi.GPIO as GPIO
+import time
+pins = [18]
+GPIO.setmode(GPIO.BCM) #sets the pins to know the mode
+GPIO.setup(pins, GPIO.OUT)
+servo = GPIO.PWM(18, 50) #pin 18, 50% high power
+servo.start(7.5) #2.5-12.5, controls where it is facing
+while True:
+    servo.ChangeDutyCycle(12.5)
+    time.sleep(1)
+    servo.ChangeDutyCycle(7.5)
+    time.sleep(1)
+    servo.ChangeDutyCycle(2.5) #rotates from 0, 90, to 180 degrees
+    time.sleep(1)
+

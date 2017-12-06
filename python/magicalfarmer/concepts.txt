@@ -1,0 +1,19 @@
+The game basically simulates the Magical Crops Minecraft mod. You'll start out with a 3x3 plot of land and 1 grass seed.
+When you have enough money you can buy Green Essence to make your first seed, as well as other materials which you can make seeds to grow. You can also buy more land to
+expand your farm. Land prices depend on who owns the land and how developed it is.
+
+The Market is where you can buy and sell practically anything in the game. Sell prices are 80% of their respective buy prices. If it would cost you 10 dollars to buy
+something, you would get 8 dollars for selling it.
+
+The Market also sells services (access to crafting stations, furnaces, as well as various other machines including Infusion Stones)
+Crafting stations allow you to craft seeds, devices, and practically anything in the game. Machines can be crafted as well as bought in the Market if you can afford
+them. However if you only need to use a machine once or twice it's cheaper to use the public ones.
+
+Infusion stones allow you to compress Essence to a higher level. Different infusion stones are specified for certain Essence levels, except for the highest stone level
+which works with all essence levels (but is very expensive.)
+The different Essence levels are Green, Orange, Yellow, Blue, and Purple. It takes 4 essence of a level in an Infusion Stone to create 1 Essence of the next level.
+9 Essence can be compacted in a crafting station to create a block of that essence.
+
+As you progress throughout the game, you can automate crop harvesting, speed up crop growth, and increase crop yields.
+The Seed Analyzer can show you the qualities of seeds (unanalyzed seeds will grow at random rates and yield random amounts) There will be ways to selectively breed and
+enchace seeds.

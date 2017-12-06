@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+import skilstak.colors as c
+name = str(input("Tell me your name and noone gets hurt! " + c.base3))
+print(c.r + "Hello, " + c.y + name + c.b + ", I will spare your pathetic soul. NOW GET OFF MY LAWN!")

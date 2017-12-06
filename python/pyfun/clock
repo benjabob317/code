@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+
+#An old program I made a while ago
+
+import time
+l = time.localtime()
+
+year = l[0]
+
+months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+month = months[l[1] - 1]
+
+monthday = l[2]
+
+weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+weekday = weekdays[l[6]]
+
+if l[3] > 12:
+    hour = l[3] - 12
+    half = 'P.M.'
+elif 0 < l[3] <= 12:
+    hour = l[3]
+    if hour < 12:
+        half = 'A.M.'
+    else:
+        half = 'P.M.'
+elif l[3] == 0:
+    hour = 12
+    half = 'A.M.'
+else:
+    hour = 'ideka'
+    half = 'end me now'
+
+if l[4] < 10:
+    minute = '0' + str(l[4])
+else:
+    minute = l[4]
+
+if l[5] < 10:
+    second = '0' + str(l[5])
+else:
+    second = l[5]
+print('The time is ' + str(hour) + ':' + str(minute) + ':' + str(second) + ' ' + half + ' The date is ' + weekday + ', ' + month + ' ' + str(monthday) + ', ' + str(year) + '.')

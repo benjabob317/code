@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+import RPi.GPIO as GPIO
+import time
+pins_out = [18, 26]
+pins_in = [19]
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(pins_out, GPIO.OUT)
+GPIO.setup(pins_in, GPIO.IN)
+servo = GPIO.PWM(18, 50)
+servo.start(7.5)
+def check_dis():
+    GPIO.output(26, 1)
+    time.sleep(0.00001)
+    GPIO.output(26, 0)
+    while GPIO.input(19) == 0:
+        start = time.time()
+    while GPIO.input(19) == 1:
+        stop = time.time()
+    duration = stop-start
+    distance = duration*17150
+    return round(distance, 2)
+while breaker == 0:
+    if breaker == 0: 
+        for x in range(2.5, 13, .5): 
+            servo.ChangeDutyCycle(x)
+            if check_dis <= 60:
+                breaker = 1
+                break
+            sleep(.5)
+    if breaker == 0: 
+        for x in range(12, 2.5, -.5):
+            servo.ChangeDutyCycle(x)
+            if check_dis <= 60:
+                breaker = 1
+                break
+            sleep(.5)

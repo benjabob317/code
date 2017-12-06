@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+
+# A simple program to print a colorful greeting 
+
+import colors as c 
+
+print(c.clear + c.Y + "Hello " + c.O + "world!" + c.X)
+

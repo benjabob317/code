@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+import sys
+import time
+import random as r
+l = sys.argv
+def shyell():
+    print("IIIII AM POWERED BY A SHEBANG LINE, GO AWAY MORTAL SCUM!")
+
+def add(n, n2):
+    n, n2 = int(n), int(n2)
+    if n == 9 and n2 == 10:
+        print(21)
+    else:
+        print(n+n2)
+def pause(name):
+    name = str(name)
+    print("Uh, hello... Now what was your name again?")
+    time.sleep(r.randint(1, 5))
+    print("Ah, it must've been %s" % name)
+if l[1] == "shyell":
+    shyell()
+elif l[1] == "add":
+    add(l[2], l[3])
+elif l[1] == "pause":
+    pause(l[2])
+else:
+    print("The functions I comprehend are add, pause, and shyell. Pick one of them, you stain on the reputation of humanity!")
+    

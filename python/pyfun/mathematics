@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+import sys
+xl = []
+yl = []
+facl = []
+primetl = []
+inputl = []
+def factors(num, include1, includenum):
+    global facl
+    x = 0
+    facl = []
+    if include1 == 0:
+        in1  = 2
+    if include1 == 1:
+        in1  = 1
+    for x in range(in1, round(num**.5)+1):
+        if num%x == 0:
+            facl.append(x)
+    if x**.5 in facl:
+        x = len(facl) - 2
+    else:
+        x = len(facl) - 1
+    if include1 == 1 and includenum == 0:
+        fin = 0
+    else:
+        fin = -1
+    for x in range(x, fin, -1):
+        facl.append(int(num/facl[x]))
+    if include1 == 0 and includenum == 1:
+        facl.append(num)
+
+#def primetree(num): Broken at the moment
+    #curnum = num
+    #loopbreak = 1
+    #global facl
+    #global primetl
+    #primetl = []
+    #while loopbreak > 0:
+        #factors(curnum, 0, 0)
+        #primetl.append(facl[0])
+        #curnum /= facl[0]
+        #if len(facl) == 1:
+            #loopbreak = 0
+            #primetl.append(curnum)
+        #print(curnum)
+        #print(primetl)
+        #print(facl)
+    #primetl.append(curnum)
+
+def corco():
+    global xl
+    global yl
+    xl2 = []
+    yl2 = []
+    xyl = []
+    xl = [2, 3, 4, 5]
+    yl = [4, 4, 5, 6]
+    for scan in xl:
+        xl2.append(scan**2)
+    for scan in yl:
+        yl2.append(scan**2)
+    for scan, scan2 in zip(xl, yl):
+        xyl.append(scan*scan2)
+    sxx = sum(xl2) - ((sum(xl)**2)/len(xl))
+    syy = sum(yl2) - ((sum(yl)**2)/len(yl))
+    sxy = sum(xyl) - ((sum(xl)*sum(yl))/len(xl))
+    r = sxy/((sxx*syy)**.5)
+    print(r)
+
+def quadform(a, b, c):
+    sol1 = (0-b + (b*b - 4*a*c)**.5)/(2*a)
+    sol2 = (0-b - (b*b - 4*a*c)**.5)/(2*a)
+    if (b*b - 4*a*c) != 0:
+        print(sol1)
+    print(sol2)
+quadform(1, 0, 0)

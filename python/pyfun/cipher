@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+import skilstak.colors as c
+import sys
+from time import sleep
+print(c.r + "WELCOME TO CIPHER YOU STAIN ON THE REPUTATION OF HUMANITY!!!!!!!!!!!!!!!!" + c.x)
+message = ''
+key = {
+        "a": "|",
+        "b": "|_",
+        "c": "||",
+        "d": "|__",
+        "e": "|_|",
+        "f": "||_",
+        "g": "|||",
+        "h": "|___",
+        "i": "|__|",
+        "j": "|_|_",
+        "k": "|_||",
+        "l": "||__",
+        "m": "||_|",
+        "n": "|||_",
+        "o": "||||",
+        "p": "|____",
+        "q": "|___|",
+        "r": "|__|_",
+        "s": "|__||",
+        "t": "|_|__",
+        "u": "|_|_|",
+        "v": "|_||_",
+        "w": "|_|||",
+        "x": "||___",
+        "y": "||__|",
+        "z": "||_|_",
+        " ": "  "
+}
+decoder = {y:x for x,y in key.items()}
+def encode():
+    global message
+    encmsg = ''
+    for char in message.lower():
+        enc = key[char]
+        encmsg += (enc + "\\")
+    return(c.clear + "Your glorious encoded message is " + c.y + encmsg)
+
+def decode():
+    global message
+    chars = message.split("\\") #HAIL TIM
+    chars.remove(chars[len(chars) - 1])
+    decodedmsg = ''
+    for char in chars:
+        decodedmsg += decoder[char] 
+    return(c.clear + "Your glorious decoded message is " + c.y + decodedmsg)
+choice = input(c.r + "SO YOU WORTHLESS PUNY HUMAN, DO YOU WANT TO ENCODE OR DECODE A MESSAGE?!?!?!? I DON'T GET PAID ENOUGH FOR THIS JOB HURRY UP NNNOOOWWWWWW!!!!!! " + c.base3 + "> ")
+message = input(c.base3 + "ENTER YOUR MESSAGE "+ c.r + "OR BRUTALLY DIE!" + c.base3 + " > " + c.cyan)
+if choice.lower() == "encode":
+    print(encode())
+elif choice.lower() == "decode":
+    print(decode())
+else:
+    print(c.r + "GET OUT NOW!!!!!! YOU MAKE THE UNIVERSE SUFFER BY EXISTING!!!!!!!!!")
