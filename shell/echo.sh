@@ -1,0 +1,4 @@
+#!/bin/sh
+STRING1="h"
+STRING2="i"
+echo $STRING1$STRING2
