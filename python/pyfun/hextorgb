@@ -10,9 +10,11 @@ def rgbtohex(r, g, b):
     for x in [expform16(r), expform16(g), expform16(b)]:
         final += rh[x[0]/16] + rh[x[1]]
     return final
-def hextorgb(str):
+def hextorgb(string):
+    str = string.lower()
     final = []
     for x in [str[0]+str[1], str[2]+str[3], str[4]+str[5]]:
         final.append((16*hr[x[0]]) + hr[x[1]])
     return final
-print(hextorgb("ffffff"))
+print(input("what is this lol > "))
+print(hextorgb(input(" > ")))

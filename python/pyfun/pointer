@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+def point(string1, string2): #points out differences between 2 strings
+    errors = []
+    for x in range(0, min(len(string1), len(string2))):
+        if string1[x] != string2[x]:
+            errors.append(x)
+    line2 = ''
+    if errors != []:
+        line2 += (' '*errors[0]) + '|'
+        for x in range(1, len(errors)):
+            line2 += (' '*((errors[x]-errors[x-1]) - 1)) + '|'
+        if len(string1) != len(string2):
+            line2 += ('|'*abs(len(string1) - len(string2)))
+    else:
+        if len(string1) != len(string2):
+            line2 += (' '*min(len(string1), len(string2))) + ('|'*abs(len(string1) - len(string2)))
+    return string1 + '\n' + line2 + '\n' + string2
+print(point(input('string 1 > '), input('string 2 > ')))
