@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+import urllib.request
+url = input("wikipedia url > ")
+while True:
+    site = urllib.request.urlopen(url)
+    html = str(site.read())
+    print(url)
+    hrefs = html.split("<p>")[1].split('<a href="')
+    links = [] #gets list of all links in website
+    for x in range(1, len(hrefs)):
+        if x%2 == 1:
+            links.append(hrefs[x].split('"')[0])
+    wikilinks = []
+    for x in links:
+        if x[:5] == '/wiki':
+            wikilinks.append(x)
+    url = "https://en.wikipedia.org" + wikilinks[0]

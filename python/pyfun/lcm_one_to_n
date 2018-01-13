@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+import math
+
+def isprime(n):
+    if n == 2:
+        output = True
+    elif n == 1:
+        output = False
+    else:
+        output = True
+        for x in range(2, math.ceil(n**.5)+1):
+            if n%x == 0:
+                output = False
+                break
+    return output
+
+def primesupto(n): #all prime numbers up to and potentially including numbers
+    output = []
+    for x in range(2, n+1):
+        if isprime(x) == True:
+            output.append(x)
+    return output
+
+def lcm_one_to_n(n): #lcm of all integers from 1 to n
+    primes = primesupto(n)
+    powers = [] #represents the lcm as a product of powers of numbers
+    for x in range(0, len(primes)):
+        powers.append([primes[x], 1])
+    output = 1 #value to be returned
+    for x in powers:
+        breaker = 0
+        while breaker != 1:
+            if x[0]**(x[1]+1) <= n:
+                x.append(x[1]+1)
+                x.remove(x[1])
+            else:
+                breaker = 1
+        output *= x[0]**x[1]
+    return output
+while True:
+    print(lcm_one_to_n(int(input("> ")))) 
