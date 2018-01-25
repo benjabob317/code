@@ -18,5 +18,5 @@ elif temptype == "kelvin":
 request = urlopen("http://api.openweathermap.org/data/2.5/weather?q=" + cityname + "&appid=89ac5df152df034d1ca9d081f065a2e2&units=" + temptype)
 raw = request.read().decode("utf-8")
 data = json.loads(raw)
-print("The temperature in " + c.r + data['name'] + c.b01 + " is " + c.b + str(data['main']['temp']) + " degrees " + c.y + vtemp)
+print("The temperature in " + data['name'] + " is " + str(data['main']['temp']) + " degrees " + vtemp)
 #print(data) #test

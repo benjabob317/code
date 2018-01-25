@@ -106,7 +106,7 @@ def turn(degrees):
     direc += degrees
 #def decode():
     #jfor x in range(0, len(inputs)):
-forward(5)   
+forward(6)   
 turn(44)
 forward(5)
 s.endwin()
