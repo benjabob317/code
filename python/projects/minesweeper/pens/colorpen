@@ -1,26 +1,18 @@
 #!/usr/bin/env python3
 
-#base game, no colors
+#generates a board with user-set mines, just for kicks, uses colors (might not work in all terminals)
 
 import random
+import skilstak.colors as c #a color module
 import sys
 
 board = {} #dictionary of board
 
-def init(width, height, minecount): #31 by 16 board with 99 mines is expert mode
+def init(width, height, locations): #31 by 16 board with 99 mines is expert mode
     for x in range(1, ((width*height) + 1)): #creates spaces row by row
         board[x] = ' '
-
-    for x in range(0, minecount): #randomly creates 99 mines
-        pos = random.randint(1, (width*height)) #picks a random spot to place a mine
-        while board[pos] == '*': #if a mine already exists, finds a new place
-            pos = random.randint(1, (width*height))
-        board[pos] = '*'
-
-    mines = [] #a list of all the mines
-    for x in range(1, ((width*height) + 1)):
-        if board[x] == '*':
-            mines.append(x)
+    for x in locations: #creates mines in locations determined by user
+        board[x] = '*'
 
     #generates number data
     for x in range(1, ((width*height) + 1)):
@@ -53,9 +45,26 @@ def refresh(width, height): #generates a visual board with numbers
     output = '' #prints the board to the screen
     for row in range(0, height): #scans through rows
         for x in range(1, (width+1)):
-            output += board[(row*width)+x] #prints the relevant space
+            if board[(row*width)+x] == '1':
+                output += c.b+board[(row*width)+x]+c.x #ones are made blue
+            elif board[(row*width)+x] == '2':
+                output += c.g+board[(row*width)+x]+c.x #twos are made green
+            elif board[(row*width)+x] == '3':
+                output += c.r+board[(row*width)+x]+c.x #threes twos are made red
+            elif board[(row*width)+x] == '4':
+                output += c.v+board[(row*width)+x]+c.x #fours are made violet
+            elif board[(row*width)+x] == '5':
+                output += c.m+board[(row*width)+x]+c.x #fives are made magenta
+            elif board[(row*width)+x] == '6':
+                output += c.c+board[(row*width)+x]+c.x #sixes are made cyan
+            elif board[(row*width)+x] == '7':
+                output += c.b3+board[(row*width)+x]+c.x #sevens are made white
+            elif board[(row*width)+x] == '8':
+                output += c.y+board[(row*width)+x]+c.x #eights are made yellow
+            else:
+                output += board[(row*width)+x] #prints the relevant space
         output += '\n' #separates rows
     print('\n'*30)
     print(output)
-init(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
-refresh(int(sys.argv[1]), int(sys.argv[2]))
+init(31, 16, [66, 68, 97, 99, 128, 130, 159, 160, 161])
+refresh(31, 16)
