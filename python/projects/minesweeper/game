@@ -4,54 +4,57 @@
 
 import random
 
-board = {} #dictionary of 31x16 board
-for x in range(1, 497): #creates spaces row by row
-    board[x] = ' '
+board = {} #dictionary of board
 
-for x in range(0, 99): #randomly creates 99 mines
-    pos = random.randint(1, 496) #picks a random spot to place a mine
-    while board[pos] == '*': #if a mine already exists, finds a new place
-        pos = random.randint(1, 496)
-    board[pos] = '*'
+def init(width, height, minecount): #31 by 16 board with 99 mines is expert mode
+    for x in range(1, ((width*height) + 1)): #creates spaces row by row
+        board[x] = ' '
 
-mines = [] #a list of all the mines
-for x in range(1, 497):
-    if board[x] == '*':
-        mines.append(x)
+    for x in range(0, minecount): #randomly creates 99 mines
+        pos = random.randint(1, (width*height)) #picks a random spot to place a mine
+        while board[pos] == '*': #if a mine already exists, finds a new place
+            pos = random.randint(1, (width*height))
+        board[pos] = '*'
 
-#generates number data
-for x in range(1, 497):
-    if board[x] != '*':
-        surroundings = [] #list containing the surrounding 8 spaces
-        if (x - 31) > 0: #if not on the top
-            surroundings.append(board[x - 31]) #space directly above
-            if x%31 != 0: #if not on the far right
-                surroundings.append(board[x - 30]) #space on the top-right
-            if (x-1)%31 != 0: #if not on the far left
-                surroundings.append(board[x - 32]) #space on the top-left
-        if (x - 465) <= 0: #if not on the bottom
-            surroundings.append(board[x + 31]) #space directly below
-            if x%31 != 0: #if not on the far right
-                surroundings.append(board[x + 32]) #space on the bottom-right
-            if (x-1)%31 != 0: #if not on the far left
-                surroundings.append(board[x + 30]) #space on the bottom-left
-        if x%31 != 0: #if not on the far right, search space directly to the right
-                surroundings.append(board[x + 1]) #space directly to the right
-        if (x-1)%31 != 0: #if not on the far left, search space directly to the left
-            surroundings.append(board[x - 1]) #space directly to the left
-        mine_counter = 0
-        for i in surroundings: #counts the amount of mines in the surrounding 8 spaces
-            if i == '*':
-                mine_counter += 1
-        if mine_counter != 0:
-            board[x] = str(mine_counter) #replaces the empty space with the number of mines in the surrounding 8 spaces
+    mines = [] #a list of all the mines
+    for x in range(1, ((width*height) + 1)):
+        if board[x] == '*':
+            mines.append(x)
 
-def refresh(): #generates a visual board with numbers
+    #generates number data
+    for x in range(1, ((width*height) + 1)):
+        if board[x] != '*':
+            surroundings = [] #list containing the surrounding 8 spaces
+            if (x - width) > 0: #if not on the top
+                surroundings.append(board[x - width]) #space directly above
+                if x%width != 0: #if not on the far right
+                    surroundings.append(board[x - (width - 1)]) #space on the top-right
+                if (x-1)%width != 0: #if not on the far left
+                    surroundings.append(board[x - (width + 1)]) #space on the top-left
+            if (x - ((height - 1)*width)) <= 0: #if not on the bottom
+                surroundings.append(board[x + width]) #space directly below
+                if x%width != 0: #if not on the far right
+                    surroundings.append(board[x + width + 1]) #space on the bottom-right
+                if (x - 1)%width != 0: #if not on the far left
+                    surroundings.append(board[x + (width - 1)]) #space on the bottom-left
+            if x%width != 0: #if not on the far right, search space directly to the right
+                    surroundings.append(board[x + 1]) #space directly to the right
+            if (x - 1)%width != 0: #if not on the far left, search space directly to the left
+                surroundings.append(board[x - 1]) #space directly to the left
+            mine_counter = 0
+            for i in surroundings: #counts the amount of mines in the surrounding 8 spaces
+                if i == '*':
+                    mine_counter += 1
+            if mine_counter != 0:
+                board[x] = str(mine_counter) #replaces the empty space with the number of mines in the surrounding 8 spaces
+
+def refresh(width, height): #generates a visual board with numbers
     output = '' #prints the board to the screen
-    for row in range(0, 16): #scans through rows
-        for x in range(1, 32):
-            output += board[(row*31)+x] #prints the relevant space
+    for row in range(0, height): #scans through rows
+        for x in range(1, (width+1)):
+            output += board[(row*width)+x] #prints the relevant space
         output += '\n' #separates rows
     print('\n'*30)
     print(output)
-refresh()
+init(31, 16, 99)
+refresh(31, 16)
