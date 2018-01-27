@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+import random
+
+pile = [ #unshuffled deck
+    "2 of clubs", 
+    "3 of clubs", 
+    "4 of clubs", 
+    "5 of clubs", 
+    "6 of clubs", 
+    "7 of clubs", 
+    "8 of clubs", 
+    "9 of clubs", 
+    "10 of clubs", 
+    "Jack of clubs", 
+    "Queen of clubs", 
+    "King of clubs", 
+    "Ace of clubs", 
+    "2 of spades", 
+    "3 of spades", 
+    "4 of spades", 
+    "5 of spades", 
+    "6 of spades", 
+    "7 of spades", 
+    "8 of spades", 
+    "9 of spades", 
+    "10 of spades", 
+    "Jack of spades", 
+    "Queen of spades", 
+    "King of spades",
+    "Ace of spades",
+    "2 of hearts", 
+    "3 of hearts", 
+    "4 of hearts", 
+    "5 of hearts", 
+    "6 of hearts", 
+    "7 of hearts", 
+    "8 of hearts", 
+    "9 of hearts", 
+    "10 of hearts", 
+    "Jack of hearts", 
+    "Queen of hearts", 
+    "King of hearts", 
+    "Ace of hearts", 
+    "2 of diamonds", 
+    "3 of diamonds", 
+    "4 of diamonds", 
+    "5 of diamonds", 
+    "6 of diamonds", 
+    "7 of diamonds", 
+    "8 of diamonds", 
+    "9 of diamonds", 
+    "10 of diamonds", 
+    "Jack of diamonds", 
+    "Queen of diamonds", 
+    "King of diamonds", 
+    "Ace of diamonds"
+]
+random.shuffle(pile) #shuffles the deck
+
+card_values = {
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9,
+    '10': 10,
+    'Jack': 11,
+    'Queen': 12,
+    'King': 13,
+    'Ace': 14
+}
+
+comp_deck = pile[0:26] #gives the computer half the deck
+your_deck = pile[26:52] #gives you half of the deck
+
+while len(comp_deck) > 0 and len(your_deck) > 0:
+    used_pile = []
+    print(your_deck)
+    while your_choice not in your_deck: #Will ask you for a card until you pick a valid card
+        your_choice = input('Card to play? > ')
+        if your_choice not in your_deck:
+            print("Invalid card")
+    used_pile.append(your_choice)
+    comp_choice = random.choice(comp_deck) #The computer picks a random card to play
+    comp_deck.remove(comp_choice)
+    print('The computer played ' + comp_choice)
+    used_pile.append(comp_choice)
+    if card_values[your_choice.split()[0]] > card_values[comp_choice.split()[0]]:
+        print("You won!")
+        comp_deck += used_pile
+    elif card_values[your_choice.split()[0]] < card_values[comp_choice.split()[0]]:
+        print("You lost!")
+        your_deck += used_pile
+    else:
+        print("You tied!")
+    your_deck.remove(your_choice)
