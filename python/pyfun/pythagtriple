@@ -1,5 +1,2 @@
 #!/usr/bin/env python3
-def pythagtriplegen(n1, n2): #Generates a pythagorean triple from 2 numbers
-    return {'leg1': (n1**2) - (n2**2), 'leg2': 2*n1*n2, 'hypotenuse': (n1**2) + (n2**2)}
-while True:
-    print(pythagtriplegen(int(input('first number > ')), int(input('second number > '))))
+#!/usr/bin/env python3

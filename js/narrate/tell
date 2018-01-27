@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function prnt(message) {
+    for (x in message) {
+        process.stdout.write(message[x])
+    }
+}
