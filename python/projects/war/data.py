@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-import random
-
 pile = [ #unshuffled deck
     "2 of clubs", 
     "3 of clubs", 
@@ -55,7 +53,6 @@ pile = [ #unshuffled deck
     "King of diamonds", 
     "Ace of diamonds"
 ]
-random.shuffle(pile) #shuffles the deck
 
 card_values = {
     '2': 2,
@@ -72,28 +69,3 @@ card_values = {
     'King': 13,
     'Ace': 14
 }
-
-comp_deck = pile[0:26] #gives the computer half the deck
-your_deck = pile[26:52] #gives you half of the deck
-
-while len(comp_deck) > 0 and len(your_deck) > 0:
-    used_pile = []
-    print(your_deck)
-    while your_choice not in your_deck: #Will ask you for a card until you pick a valid card
-        your_choice = input('Card to play? > ')
-        if your_choice not in your_deck:
-            print("Invalid card")
-    used_pile.append(your_choice)
-    comp_choice = random.choice(comp_deck) #The computer picks a random card to play
-    comp_deck.remove(comp_choice)
-    print('The computer played ' + comp_choice)
-    used_pile.append(comp_choice)
-    if card_values[your_choice.split()[0]] > card_values[comp_choice.split()[0]]:
-        print("You won!")
-        comp_deck += used_pile
-    elif card_values[your_choice.split()[0]] < card_values[comp_choice.split()[0]]:
-        print("You lost!")
-        your_deck += used_pile
-    else:
-        print("You tied!")
-    your_deck.remove(your_choice)
