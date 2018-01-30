@@ -65,7 +65,7 @@ public class Control extends LinearOpMode {
     DcMotor leftMotor;
     DcMotor rightMotor;
     double leftPower = 0.0;
-    double rightPower = 0.5;
+    double rightPower = 0.0;
 
     Servo elbow;
     Servo wrist;
