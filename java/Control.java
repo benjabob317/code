@@ -54,7 +54,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="Control", group="Linear Opmode")
-@Disabled
+//@Disabled
 public class Control extends LinearOpMode {
 
     // Declare OpMode members.
@@ -115,15 +115,15 @@ public class Control extends LinearOpMode {
             }
             // change to a case block
             if (gamepad2.left_bumper && wristPosition < 1.0) {
-                clawPosition = clawPosition + 0.05;
+                wristPosition = wristPosition + 0.05;
                 //sleep(200);
             } else if (gamepad2.right_bumper && wristPosition > 0.0) {
-                clawPosition = clawPosition - 0.05;
+                wristPosition = wristPosition - 0.05;
                 //sleep(200);
             }
 
             if (gamepad2.dpad_down && elbowPosition < 1.0) {
-                elbowPosition = elbowPosition + 0.05;
+                elbowPosition = elbowPosition - 0.05;
                 //sleep(200);
             } else if (gamepad2.dpad_up && elbowPosition > 0.0) {
                 elbowPosition = elbowPosition + 0.05;
@@ -138,6 +138,7 @@ public class Control extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
             telemetry.update();
+            sleep(200);
         }
     }
 }
