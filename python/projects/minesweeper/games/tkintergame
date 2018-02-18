@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
-
-#base game, no colors
-
 import random
-import sys
+from tkinter import *
+root = Tk()
+frame = Frame(root)
+frame.pack()
 
-board = {} #dictionary of board
-
+board = {}
 def init(width, height, minecount): #31 by 16 board with 99 mines is expert mode
     for x in range(1, ((width*height) + 1)): #creates spaces row by row
         board[x] = [' ', 'O'] #value, apparent value
@@ -44,14 +43,27 @@ def init(width, height, minecount): #31 by 16 board with 99 mines is expert mode
             if mine_counter != 0:
                 board[x][0] = str(mine_counter) #replaces the empty space with the number of mines in the surrounding 8 spaces
 
+init(31, 16, 99)
+w = 31
+h = 16
+m = 99
 
-def refresh(width, height): #generates a visual board with numbers
-    output = '' #prints the board to the screen
-    for row in range(0, height): #scans through rows
-        for x in range(1, (width+1)):
-            output += board[(row*width)+x][1] #prints the relevant space
-        output += '\n' #separates rows
-    print('\n'*30)
-    print(output)
-init(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
-refresh(int(sys.argv[1]), int(sys.argv[2]))
+class Spot(Button):
+    def __init__(self, number, value, apparent):
+        super().__init__(master=None)
+        data = [number, value, apparent]
+        self.config(text=apparent, command=self.leftclick)    
+    def leftclick(self):
+        self.config(text=value)
+    
+buttons = {}
+
+def initboard(width, height, minecount):
+    for x in range(1, len(board)+1):
+        buttons[x] = Spot(x, board[x][0], board[x][1])
+    for x in range(1, len(board)+1):
+        buttons[x].grid(row=(w//x), column = (w%x))
+
+
+initboard(31, 16, 99)
+root.mainloop()
