@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+import time
+
+def slowspace(forward, delay):
+    while True:
+        for x in range(0, forward):
+            print(' ', end='', flush=True)
+            time.sleep(delay)
+        for x in range(0, (forward - 1)):
+            print('\b \b', end='', flush=True)
+            time.sleep(delay)
+slowspace(7, .1)
