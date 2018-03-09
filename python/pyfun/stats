@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+def median(values):
+  values = sorted(values)
+  if len(values) % 2 == 0:
+    return (values[int(len(values)/2)] + values[int(len(values)/2) - 1])/2
+  else:
+    return values[int(len(values)/2)]
+
+def variance(values, sample):
+  squared_deviations = []
+  for x in values:
+    squared_deviations.append((x - (sum(values)/len(values)))**2)
+  if sample == True: #if sample, divide by len - 1
+    return sum(squared_deviations)/(len(squared_deviations) - 1)
+  else:
+    return sum(squared_deviations)/len(squared_deviations)
+
+def five_num_sum(values):
+  values = sorted(values)
+  if len(values) == 1:
+    return [values[0], values[0], values[0], values[0], values[0]]
+  else:
+    return [min(values), median(values[0:int(len(values)/2)]), median(values), median(values[int((len(values)+1)/2):len(values)]), max(values)] #min, 1st quartile, median, 3rd quartile, max
+
+output = []
+while True:
+  num = input("> ").lower()
+  try: #if input is a number
+    output.append(float(num))
+    output = sorted(output)
+  except ValueError: #if input is not a number
+    if num == "mean" or num == "average":
+      try:
+        print(sum(output)/len(output))
+      except ZeroDivisionError: #To calculate the mean you have to divide by the amount of numbers
+        print("You can't call that function until you input numbers!")
+      
+    elif num == "median":
+      try:
+        print(median(output))
+      except IndexError: #You can't find the median of 0 numbers!
+        print("You can't call that function until you input numbers!")
+      
+    elif num == "variance":
+      if len(output) == 0:
+        print("You can't call that function until you input numbers!")
+      else:
+        version = input("Population or sample? > ")
+        if version == "population" or version == "p":
+          print(variance(output, False))
+        elif version == "sample" or version == "s":
+          print(variance(output, True))
+        else:
+          print("invalid type of variance")
+        
+    elif num == "sd" or num == "standard deviation":
+      if len(output) == 0:
+        print("You can't call that function until you input numbers!")
+      else:
+        version = input("Population or sample? > ")
+        if version == "population" or version == "p":
+          print(variance(output, False)**.5)
+        elif version == "sample" or version == "s":
+          print(variance(output, True)**.5)
+        else:
+          print("invalid type of standard deviation")
+    elif num in ["five number summary", "5 number summary", "5numsum", "5 num sum"]:
+      try:
+        print(five_num_sum(output))
+      except (ValueError, IndexError): #ValueError for doing min of an empty list, IndexError for 5 number summary of list with 1 number
+        print("You can't call that function until you input numbers!")
+        
+    elif num == "stats" or num == "statistics":
+      try:
+        print("\nMean: " + str(sum(output)/len(output)))
+        print("\nMinimum: " + str(min(output)))
+        print("Q1: " + str(five_num_sum(output)[1]))
+        print("Median: " + str(median(output)))
+        print("Q3: " + str(five_num_sum(output)[3]))
+        print("Maximum: " + str(max(output)))
+        print("\nPopulation variance: " + str(variance(output, False)))
+        print("Population standard deviation: " + str(variance(output, False)**.5))
+        print("\nSample variance: " + str(variance(output, True)))
+        print("Sample standard deviation: " + str(variance(output, True)**.5) + '\n')
+      except (ValueError, IndexError, ZeroDivisionError):
+        print("You can't call that function until you input numbers!")
+    
+    elif num == "list":
+      print(output)
+    elif num == "clear":
+      output = []
+    elif num == "guide" or num == "help":
+      print("\nTo input numbers, repeatedly type a number and hit enter\nTo clear the list of numbers, type 'clear'\nTo print the current list, type 'list'\n\n\'mean' or 'average' - prints mean of the list\n'median' - prints median of the list\n'5numsum' or '5 number summary' - prints five number summary (minimum, Q1, median, Q3, maximum)\n'standard deviation' or 'sd' - prints standard deviation of the list, you will be prompted for population or sample\n'variance' - prints variance of the list, you will be prompted for population or sample\n\n'stats' - prints out all statistics listed above\n")
+      
+    else:
+        print("Please input numbers or a valid function (type 'guide' or 'help' for a guide)")
