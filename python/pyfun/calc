@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+while True:
+    expression = input("Enter an expression haha > ") #numberoperatornumber
+    if '/' in expression:
+        print(float(expression.split('/')[0])/float(expression.split('/')[1]))
+    elif '*' in expression:
+        print(float(expression.split('*')[0])*float(expression.split('*')[1]))
+    elif '+' in expression:
+        print(float(expression.split('+')[0])+float(expression.split('+')[1]))
+    elif '-' in expression:
+        print(float(expression.split('-')[0])-float(expression.split('-')[1]))
+    else:
+        print("Valid expressions have a number, operator, and number, ex. 6*7")
