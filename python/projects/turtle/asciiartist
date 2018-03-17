@@ -104,9 +104,8 @@ def turn(degrees):
     """rotate and stuff"""
     global direc
     direc += degrees
-#def decode():
-    #jfor x in range(0, len(inputs)):
-forward(6)   
-turn(44)
-forward(5)
+for i in range(0, 5):
+    forward(17)
+    turn(72)
+t.sleep(1)
 s.endwin()
