@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+import urllib.request
+from urllib.error import HTTPError
+import math
+import time
+
+site = urllib.request.urlopen("https://www.nationstates.net/region=doll_guldur")
+html = str(site.read())
+nation_count = int(html.split('<a href="region=doll_guldur/page=list_nations">')[1].split(' nations')[0]) #amount of nations in the region
+
+raw_nations = []
+for page in range(0, math.ceil(nation_count/10)):
+    link = "https://www.nationstates.net/page=list_nations/region=doll_guldur/censusid=80?start=" + str(page*10)
+    site = urllib.request.urlopen(link)
+    html = str(site.read())
+    for x in html.split('nation='):
+        raw_nations.append(x.split('"')[0]) #adds nation links to the list
+    print("Page " + str(page+1) + " of " + str(math.ceil(nation_count/10)) + " scanned")
+print("All nation pages scanned\n")
+
+for x in raw_nations:
+    if "censusid" in x:
+        raw_nations.remove(x) #removes duplicates involving census id
+for x in raw_nations:
+    if "<!DOCTYPE" in x:
+        raw_nations.remove(x) #removes non-nations caused by doctype html
+
+unique_nations = []
+for x in raw_nations:
+    if x not in unique_nations:
+        unique_nations.append(x) #removes duplicates of nations, highly unlikely but just in case
+
+#This section of the program gets all the update times available for each nation. This process will take a long time.
+update_times = []
+for x in range(0, len(unique_nations)):
+    nation = "https://www.nationstates.net/cgi-bin/rss.cgi?nation=" + unique_nations[x]
+    try:
+        nationsite = urllib.request.urlopen(nation)
+    except HTTPError:
+        print(unique_nations[x] + ' - 404 nation not found')
+    else:
+        nationhtml = str(nationsite.read())
+        if len(nationhtml.split('influence in Doll Guldur')) > 1:
+            for y in range(1, len(nationhtml.split('influence in Doll Guldur'))):
+                update_times.append(nationhtml.split('influence in Doll Guldur')[y].split('<pubDate>')[1].split('</pubDate>')[0]) #update time as a string
+        print('Nation ' + str(x+1) + ' out of ' + str(nation_count) + ' - success')
+
+def seconds_since_2000(update): #finds seconds since since 2000 for an update, used to find the last nation of the most recent update in the region
+    year = int(update.split()[3])
+    month = update.split()[2]
+    day = int(update.split()[1])
+    monthnames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    monthlengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    days = ((year-2000)*365) + math.ceil((year-2000)/4) #days before the current year, considering leap years
+    days += sum(monthlengths[0:monthnames.index(month)]) + day
+    seconds = (days*86400) + (int(update.split()[4].split(':')[0])*3600) + (int(update.split()[4].split(':')[1])*60) + int(update.split()[4].split(':')[2])
+    return seconds
+
+minor_times = []
+major_times = []
+for x in update_times:
+    if int(x.split()[4].split(':')[0]) < 21: #if hour is less than 21
+        minor_times.append(x)
+    else:
+        major_times.append(x)
+minor_times.sort(key=lambda x: 0-seconds_since_2000(x)) #Sorts the update times based on date
+major_times.sort(key=lambda x: 0-seconds_since_2000(x)) #Sorts the update times based on date
+
+print(((int(minor_times[0].split()[4].split(':')[0])-9)*3600) + (int(minor_times[0].split()[4].split(':')[1])*60) + int(minor_times[0].split()[4].split(':')[2]))
+print(((int(major_times[0].split()[4].split(':')[0])-21)*3600) + (int(major_times[0].split()[4].split(':')[1])*60) + int(major_times[0].split()[4].split(':')[2]))
+with open('UpdTime', 'w') as UpdFile:
+    UpdFile.write("2671, 4470")

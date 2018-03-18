@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+import urllib.request
+
+def nationsendorsing(nationurl): #returns a list of the nations endorsing a nation as well as the amount of endorsements, nation is a url string
+    site = urllib.request.urlopen(nationurl)
+    html = str(site.read()) #gets string of url code
+    if 'Endorsements Received: ' in html: #if nation is in the WA
+        if 'Endorsements Received: None' in html: #if nation has no endorsements
+            return("Nation has no endorsements")
+        else: #if nation has at least 1 endorsement
+            output = []
+            endorsements = html.split('Endorsements Received: <b>')[1] #webpage after "Endorsements Received"
+            output.append(int(endorsements.split('</b>')[0])) #adds number of endorsements to output
+            for x in range(1, int(endorsements.split('</b>')[0])+1): #prints a list of all nations endorsing target nation
+                output.append(endorsements.split('nation=')[x].split('" class="nlink"')[0]) #parses through webpage to find nation names
+            return output
+    else:
+        return("Nation is not in the WA")
+#print(nationsendorsing(input("Nation url > ")))
+
+def nationsinregion(regionurl): #returns a list of all the nations in a region
+    site = urllib.request.urlopen(regionurl)
+    html = str(site.read()).lower() #gets string of url code
+    namewords = regionurl.split('region=')[1].split('_')
+    name = '' #name with spaces
+    codename = regionurl.split('region=')[1]
+    for x in namewords:
+        name += x + ' '
+    nationcount = int(html.split(codename + '/page=list_nations">')[1].split(' nations')[0])
+    print(10 + int(nationcount/10)*10)
+    nationlist = []
+    for x in range(0, 10 + int(nationcount/10)*10, 10):
+        listsite = urllib.request.urlopen('https://www.nationstates.net/page=list_nations/region=' + codename + '/censusid=66?start=' + str(x))
+        listhtml = str(site.read()).lower()
+        #nationurl = html.split("nation=")[1].split('"')[0] first nation in region, TODO get all nations
+        print(nationurl)
+    
+print(nationsendorsing(input("nation url <")))
