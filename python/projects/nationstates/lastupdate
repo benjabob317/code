@@ -68,3 +68,5 @@ major_times.sort(key=lambda x: 0-seconds_since_2000(x)) #Sorts the update times 
 
 print(((int(minor_times[0].split()[4].split(':')[0])-9)*3600) + (int(minor_times[0].split()[4].split(':')[1])*60) + int(minor_times[0].split()[4].split(':')[2]))
 print(((int(major_times[0].split()[4].split(':')[0])-21)*3600) + (int(major_times[0].split()[4].split(':')[1])*60) + int(major_times[0].split()[4].split(':')[2]))
+with open('UpdTime', 'w') as UpdFile:
+    UpdFile.write("2671, 4470")
