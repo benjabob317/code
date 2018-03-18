@@ -45,9 +45,26 @@ for x in range(0, len(unique_nations)):
                 update_times.append(nationhtml.split('influence in Doll Guldur')[y].split('<pubDate>')[1].split('</pubDate>')[0]) #update time as a string
         print('Nation ' + str(x+1) + ' out of ' + str(nation_count) + ' - success')
 
-months = {'Jan': 31, 'Feb': 28, 'Mar': 31, 'Apr': 30, 'May': 31, 'Jun': 30, 'Jul': 31, 'Aug': 31, 'Sep': 30, 'Oct': 31, 'Nov': 30, 'Dec': 31} #used to sort update times
-def days_since_2000(year, month, day):
-    days = (year-2000)*365
-    days += math.ceil((year-2000)/4) #leap years
-update_times.sort(key=lambda x: 0 - (365*int(x.split()[3]) + 35*months.index(x.split()[2]) + int(x.split()[1]))) #Sorts the update times based on year, month, and 
-print(update_times)
+def seconds_since_2000(update): #finds seconds since since 2000 for an update, used to find the last nation of the most recent update in the region
+    year = int(update.split()[3])
+    month = update.split()[2]
+    day = int(update.split()[1])
+    monthnames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    monthlengths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    days = ((year-2000)*365) + math.ceil((year-2000)/4) #days before the current year, considering leap years
+    days += sum(monthlengths[0:monthnames.index(month)]) + day
+    seconds = (days*86400) + (int(update.split()[4].split(':')[0])*3600) + (int(update.split()[4].split(':')[1])*60) + int(update.split()[4].split(':')[2])
+    return seconds
+
+minor_times = []
+major_times = []
+for x in update_times:
+    if int(x.split()[4].split(':')[0]) < 21: #if hour is less than 21
+        minor_times.append(x)
+    else:
+        major_times.append(x)
+minor_times.sort(key=lambda x: 0-seconds_since_2000(x)) #Sorts the update times based on date
+major_times.sort(key=lambda x: 0-seconds_since_2000(x)) #Sorts the update times based on date
+
+print(((int(minor_times[0].split()[4].split(':')[0])-9)*3600) + (int(minor_times[0].split()[4].split(':')[1])*60) + int(minor_times[0].split()[4].split(':')[2]))
+print(((int(major_times[0].split()[4].split(':')[0])-21)*3600) + (int(major_times[0].split()[4].split(':')[1])*60) + int(major_times[0].split()[4].split(':')[2]))
