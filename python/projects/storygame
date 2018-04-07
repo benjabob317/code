@@ -1,30 +1,37 @@
-#!/usr/bin/env/python3
-def welcome():
-    print("Hello, and welcome to the story game.")
-def name():
-    return input("What is your name? ")
+#!/usr/bin/env python3
+import sys
+from termcolor import cprint
+import json
+from urllib.request import urlopen
+from termcolor import cprint
 
-def weather():
-    import sys
-    import skilstak.colors as c
-    import json
-    from urllib.request import urlopen
-    cityname = input("What is your city? ")
-    temptype = "imperial"
-    if temptype == "fahrenheit":
-        temptype = "imperial"
-    elif temptype == "celsius":
-        temptype = "metric"
-    elif temptype == "imperial":
-        vtemp = "Fahrenheit"
-    elif temptype == "metric":
-        vtemp = "Celsius"
-    elif temptype == "kelvin":
-        vtemp = "Kelvin"
-    request = urlopen("http://api.openweathermap.org/data/2.5/weather?q=" + cityname + "&appid=89ac5df152df034d1ca9d081f065a2e2&units=" + temptype)
+def welcome(d):
+    print("Hello, and welcome to the story game.")
+    return name, d #next function
+
+def name(d):
+    input("What is your name? > ")
+    return weather, d
+
+def weather(d):
+    request = urlopen("http://api.openweathermap.org/data/2.5/weather?q=mooresville,nc,us&appid=89ac5df152df034d1ca9d081f065a2e2&units=metric")
     raw = request.read().decode("utf-8")
-    data = json.loads(raw)
-    print("The temperature in " + c.blue + data['name'] + c.x + " is " + c.r + str(data['main']['temp']) + c.x + " degrees " + vtemp)
-welcome()
-print("Have fun, " + name() + ".")
-weather()
+    info = json.loads(raw)
+    if info['main']['temp'] < 10:
+        print('It sure is cold outside.')
+    elif 10 <= info['main']['temp'] < 15:
+        print('Not too bad out')
+    elif 15 <= info['main']['temp'] < 25:
+        print("Feels great, doesn't it?")
+    else:
+        print('Pretty warm out, huh?')
+    return weather, d
+
+data = {
+  'name': None,
+}
+
+part = welcome #starting part
+
+while True: #Game loop
+    part, data = part(data) #whatever the current function returns determines the next function to run

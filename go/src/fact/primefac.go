@@ -1,16 +1,25 @@
 package main
-import "math"  
+import (
+	"math"
+	"fmt"
+)
  
 func Primefac(n int) []int {
-	num := n
-	vals := []int{}
-	z := 0
-	for z < 1 {
-		if factors(num) == [] {
-			z = 1
+	primetree := []int{}
+	for i := 2; i < int(math.Ceil(math.Sqrt(float64(n)))); i = i + 0 {
+		if math.Mod(float64(n), float64(i)) == 0 {
+			i++
 		} else {
-			vals = append(vals, factors(num)[1])
-			num = factors(num)[0]
+			n = n/i
+			primetree = append(primetree, i)
 		}
-	return vals
+	}
+	if n > 1 {
+		primetree = append(primetree, n)
+	}
+	return primetree
+}
+
+func main() {
+	fmt.Println(Primefac(6))
 }
