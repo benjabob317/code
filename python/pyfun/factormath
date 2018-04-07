@@ -99,14 +99,10 @@ while True:
         n = int(input('Enter a number to find the factors of > '))
         print(factors(n))
     elif func in ['gcf', 'greatest common factor', 'gcd', 'greatest common divisor']:
-        args = input('Enter numbers separated by commas and spaces > ').split(', ')
-        for x in range(0, len(args)):
-            args[x] = int(args[x])
+        args = [int(x) for x in input('Enter numbers separated by commas and spaces > ').split(', ')]
         print(gcf(*tuple(args)))
     elif func in ['lcm', 'least common multiple']:
-        args = input('Enter numbers separated by commas and spaces > ').split(', ')
-        for x in range(0, len(args)):
-            args[x] = int(args[x])
+        args = [int(x) for x in input('Enter numbers separated by commas and spaces > ').split(', ')]
         print(lcm(*tuple(args)))
     else:
         print("Valid functions include 'primefac', 'factors', 'gcf', and 'lcm'")
