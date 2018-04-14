@@ -106,4 +106,4 @@ if __name__ == "__main__":
             args = [int(x) for x in input('Enter numbers separated by commas and spaces > ').split(', ')]
             print(lcm(*tuple(args)))
         else:
-        print("Valid functions include 'primefac', 'factors', 'gcf', and 'lcm'")
+            print("Valid functions include 'primefac', 'factors', 'gcf', and 'lcm'")
