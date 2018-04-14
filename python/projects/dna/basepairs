@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+import data
+def basepair(strand, strand_type, new_strand_type):
+    if strand_type.lower() == 'dna':
+        if new_strand_type.lower() == 'dna':
+            conversion = data.dna_basepair
+        if new_strand_type.lower() == 'rna':
+            conversion = data.dna_rna_basepair
+    if strand_type.lower() == 'rna':
+        if new_strand_type.lower() == 'dna':
+            conversion = data.rna_dna_basepair
+        if new_strand_type.lower() == 'rna':
+            conversion = data.rna_basepair
+    new_strand = ''
+    for x in strand:
+        new_strand += conversion[x]
+    return new_strand
+
+def amino_acids(mRNA):
+    codons = [mRNA[i:i+3] for i in range(0, len(mRNA), 3)]
+    
+
+strand = input('nucleic acid sequence > ')
+print(basepair(strand, input('strand type > '), input('new strand type > ')))
