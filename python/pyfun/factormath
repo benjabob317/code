@@ -90,19 +90,20 @@ def lcm(*args): #least common multiple
         n = mult_list(common)*mult_list(uncommon)
     return n
 
-while True:
-    func = input('> ').lower()
-    if func in ['prime factors', 'prime factorization', 'primefac', 'primetree']:
-        n = int(input('Enter a number to prime factorize > '))
-        print(prime_factors(n))
-    elif func == 'factors':
-        n = int(input('Enter a number to find the factors of > '))
-        print(factors(n))
-    elif func in ['gcf', 'greatest common factor', 'gcd', 'greatest common divisor']:
-        args = [int(x) for x in input('Enter numbers separated by commas and spaces > ').split(', ')]
-        print(gcf(*tuple(args)))
-    elif func in ['lcm', 'least common multiple']:
-        args = [int(x) for x in input('Enter numbers separated by commas and spaces > ').split(', ')]
-        print(lcm(*tuple(args)))
-    else:
+if __name__ == "__main__":
+    while True:
+        func = input('> ').lower()
+        if func in ['prime factors', 'prime factorization', 'primefac', 'primetree']:
+            n = int(input('Enter a number to prime factorize > '))
+            print(prime_factors(n))
+        elif func == 'factors':
+            n = int(input('Enter a number to find the factors of > '))
+            print(factors(n))
+        elif func in ['gcf', 'greatest common factor', 'gcd', 'greatest common divisor']:
+            args = [int(x) for x in input('Enter numbers separated by commas and spaces > ').split(', ')]
+            print(gcf(*tuple(args)))
+        elif func in ['lcm', 'least common multiple']:
+            args = [int(x) for x in input('Enter numbers separated by commas and spaces > ').split(', ')]
+            print(lcm(*tuple(args)))
+        else:
         print("Valid functions include 'primefac', 'factors', 'gcf', and 'lcm'")
