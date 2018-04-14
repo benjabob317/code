@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+class Grid:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.grid = []
+        for x in range(0, height):
+            self.grid.append([x for x in 'O'*width])
+
+    def printgrid(self): #prints the grid data to the screen
+        print('\033[2J') #clears screen
+        for row in self.grid:
+            for square in row:
+                print(square, end='')
+            print('')
+            
+    def editsquare(self, x, y, char): #top-left is 1, 1, changes a certain square to the given character
+        self.grid[y-1][x-1] = char[-1] #last character if more than one character
+
+if __name__ == "__main__":
+    import time
+    plane = Grid(3, 3)
+    plane.printgrid()
+    plane.editsquare(3, 3, 'Aa')
+    time.sleep(1)
+    plane.printgrid()
