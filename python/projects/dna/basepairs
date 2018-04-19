@@ -16,9 +16,6 @@ def basepair(strand, strand_type, new_strand_type):
         new_strand += conversion[x]
     return new_strand
 
-def amino_acids(mRNA):
-    codons = [mRNA[i:i+3] for i in range(0, len(mRNA), 3)]
-    
 
 strand = input('nucleic acid sequence > ')
 print(basepair(strand, input('strand type > '), input('new strand type > ')))
