@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+def rgbtext(r, g, b): #sets text color to the parameters used, kinda weird
+    output = f'\033[38;2;{r};{g};{b}m'
+    print(output, end='')
+def rgb_background(r, g, b): #sets text color to the parameters used, kinda weird
+    output = f'\033[48;2;{r};{g};{b}m'
+    print(output, end='')
+
+if __name__ == "__main__":
+    rgbtext(255, 200, 255)
+    rgb_background(100, 255, 100)
+    print('a')

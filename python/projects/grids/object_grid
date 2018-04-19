@@ -3,9 +3,7 @@ class Grid:
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.grid = []
-        for x in range(0, height):
-            self.grid.append([x for x in 'O'*width])
+        self.grid = [[0] * width for i in range(height)]
 
     def printgrid(self): #prints the grid data to the screen
         print('\033[2J') #clears screen
@@ -13,7 +11,7 @@ class Grid:
             for square in row:
                 print(square, end='')
             print('')
-            
+
     def editsquare(self, x, y, char): #top-left is 1, 1, changes a certain square to the given character
         self.grid[y-1][x-1] = char[-1] #last character if more than one character
 
