@@ -1,0 +1,15 @@
+#!/bin/bash
+color5() { #3 arguments r g b
+    return expr 16 + 36 \* $1 + 6\* $2 + \* $3
+}
+
+color5 10 10 10
+for r in 0 1 2 3 4 5
+    do
+        for g in 0 1 2 3 4 5
+            do
+                n=color5 r g 0
+                printf "\x1b[38;5;$nm0 "
+            done   
+        printf "\n" 
+    done
