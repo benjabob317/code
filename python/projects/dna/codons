@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+from data import rna_codon_chart
+
+codons = [mRNA[i:i+3] for i in range(0, len(mRNA), 3)]
