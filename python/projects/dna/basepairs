@@ -19,9 +19,9 @@ def basepair(strand, strand_type, new_strand_type):
 def amino_acids(mRNA):
     codons = [mRNA[i:i+3] for i in range(0, len(mRNA), 3)]
     try:
-        output = [data.rna_codon_chart[x] for x in codons]
+        output = [data.rna_codon_chart[x.upper()] for x in codons]
     except KeyError:
-        output = [data.rna_codon_chart[x] for x in codons[:-1]] + [codons[-1]]
+        output = [data.rna_codon_chart[x.upper()] for x in codons[:-1]] + [codons[-1]]
     return output
 
 while True:
