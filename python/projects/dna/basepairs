@@ -16,8 +16,6 @@ def basepair(strand, strand_type, new_strand_type):
         new_strand += conversion[x]
     return new_strand
 
-<<<<<<< HEAD
-=======
 def amino_acids(mRNA):
     codons = [mRNA[i:i+3] for i in range(0, len(mRNA), 3)]
     try:
@@ -25,7 +23,25 @@ def amino_acids(mRNA):
     except KeyError:
         output = [data.rna_codon_chart[x.upper()] for x in codons[:-1]] + [codons[-1]]
     return output
->>>>>>> 878408e624c2519d8c306a31a059fdf3a5b18d98
+
+def protein_search(mRNA): #searches mRNA for proteins (only finds things between start and stop codons)
+    codons = amino_acids(mRNA)
+    
+    start_codons = []
+    for x in range(0, len(codons)):
+        if codons[x] == 'methionine':
+            start_codons.append(x)
+
+    stop_codons = []
+    for x in range(0, len(codons)):
+        if codons[x] == 'stop':
+            stop_codons.append(x)
+
+    print(start_codons)
+    print(stop_codons)
+    print(codons)
+    if start_codons[0] > stop_codons[0]:
+        print('aaa')
 
 while True:
-    print(amino_acids(input('mRNA sequence > ')))
+    print(protein_search(input('mRNA sequence > ')))
