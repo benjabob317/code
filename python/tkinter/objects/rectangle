@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+import tkinter
+tk = tkinter.Tk() #important
+canvas = tkinter.Canvas(tk, width=500, height=500)
+canvas.pack()
+
+canvas.create_rectangle(10, 10, 100, 100) #line from (0, 0) to (500, 500) - 0,0 is topleft
+
+canvas.create_rectangle(20, 20, 300, 400, fill='#FF00FF') #color rect
+
+rh = {0: '0', 1: '1', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8', 9: '9', 10: 'a', 11: 'b', 12: 'c', 13: 'd', 14: 'e', 15: 'f'}
+hr = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, 'a': 10, 'b': 11, 'c': 12, 'd': 13, 'e': 14, 'f': 15}
+def expform16(n): #splits n in into a multiple of 16 and a remainder
+    y = (n%16)
+    x = n - y
+    return [(n - n%16), n%16]
+def rgbtohex(r, g, b):
+    final = ''
+    for x in [expform16(r), expform16(g), expform16(b)]:
+        final += rh[x[0]/16] + rh[x[1]]
+    return final
+
+
+def rgbrect(x1, y1, x2, y2, r, g, b):
+    canvas.create_rectangle(x1, y1, x2, y2, fill=f'#{rgbtohex(r, g, b)}')
+rgbrect(200, 200, 300, 300, r=200, g=100, b=50)
+
+tkinter.mainloop() #keeps program alive
