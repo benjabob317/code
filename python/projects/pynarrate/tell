@@ -1,0 +1,137 @@
+#!/usr/bin/env python3
+import time
+import random
+import math
+import dicts
+from dicts import errors
+from dicts import coords
+from dicts import shift
+
+def errorgen(message, chance): #recreates a string with potential added errors
+    final = ''
+    for x in message:
+        if random.random() <= chance: #chance to type an adjacent error key in the dictionary
+            final += random.choice(errors[x]) #randomly select run adjacent key
+        else:
+            final += x
+    return final
+
+def distance(key1, key2): #basic distance formula between two keys, for peck typer
+    if key1 == key2:
+        dist = 0
+    elif coords[key1.lower()][0][1] == coords[key2.lower()][0][1]: #if on same line (same y-value)
+        dist = min([abs(coords[key2.lower()][0][0] - coords[key1.lower()][1][0]), abs(coords[key1.lower()][0][0] - coords[key2.lower()][1][0])]) #left edge of key1 - right edge of key2, vice versa, finds which is smaller to see which key is to the right of the other and finds x distance
+    elif coords[key1.lower()][0][0] < coords[key2.lower()][0][0] < coords[key1.lower()][1][0] or coords[key1.lower()][0][0] < coords[key2.lower()][1][0] < coords[key1.lower()][1][0]: #if 1 key directly over the other
+        dist = min([abs(coords[key2.lower()][1][1] - coords[key1.lower()][0][1]), abs(coords[key1.lower()][1][1] - coords[key2.lower()][0][1])]) #bottom edge of key1 - top edge of key2, vice versa, finds which is smaller to see which key is on top of the other and finds y distance
+    else:
+        xdist = min([abs(coords[key2.lower()][0][0] - coords[key1.lower()][1][0]), abs(coords[key1.lower()][0][0] - coords[key2.lower()][1][0])])
+        ydist = min([abs(coords[key2.lower()][1][1] - coords[key1.lower()][0][1]), abs(coords[key1.lower()][1][1] - coords[key2.lower()][0][1])])
+        dist = (xdist**2 + ydist**2)**.5 #distance formula, finds x distance and y distance between keys
+    return dist
+
+def practicaldist(key1, key2): #determines distance between keys, but with support for shift keys, for peck typer
+    key1shift = False
+    key2shift = False
+    if key1 != key1.lower(): #if caps, shift needed 
+        key1shift = True
+    if key2 != key2.lower(): #if caps, shift needed
+        key2shift = True
+    if key1shift == False:
+        for x in shift: #determines if key1 is a non-letter shift character
+            if key1 == shift[x]:
+                key1shift = True
+                break
+    if key2shift == False:
+        for x in shift: #determines if key2 is a non-letter shift character
+            if key2 == shift[x]:
+                key2shift = True
+                break
+    #above code determines if the shift key distance will need to be added, below code calculates distance
+    if key1shift == False and key2shift == True: #if shift is not currently being held down and needs to be to type the next key, adjusts distance for looking at shift
+        if distance(key1, "lshift") < distance(key1, "rshift"):
+            shiftkey = "lshift" #shiftkey is the closest shift button to key1, left or right side of keyboard
+        elif distance(key1, "lshift") > distance(key1, "rshift"):
+            shiftkey = "rshift"
+        elif distance(key1, "lshift") == distance(key1, "rshift"):
+            shiftkey = random.choice(["lshift", "rshift"])
+        dist = distance(key1, shiftkey) + distance(shiftkey, key2)
+    else:
+        dist = distance(key1, key2)
+    if key1 == key2:
+        dist = 0
+    return dist
+
+def peckdelay(key1, key2, logbase, logmult, const, sd): #generates a delay between 2 keys if typing with one finger, logarithm  with base of logbase multiplied by logmult then added to const, standard deviation is a percentage
+    if key1 == key2:
+        return random.normalvariate((logmult*math.log(3, logbase) + const), sd*(logmult*math.log(3, logbase) + const)) #if the next key is the same as the current, treat it like it is an adjacent key
+    else:
+        return random.normalvariate(logmult*math.log(practicaldist(key1, key2), logbase) + const, sd*logmult*math.log(practicaldist(key1, key2), logbase)) #sleep time = mult(log(distance, base=logbase) + slope*distance)
+#peckdelay("q", "p", .05, 3, .25)
+
+def handledelay(delaylist, key1, key2): #works with all delay functions, handles delay input every time it is called to find a value to sleep for
+        returnval = 0 #the value that will be sleeped
+        if delaylist[0] == 'normal':
+            returnval = random.normalvariate(delaylist[1], delaylist[2])
+        if delaylist[0] == 'peck':
+            returnval =  peckdelay(key1, key2, delaylist[1], delaylist[2], delaylist[3], delaylist[4])
+        if returnval <= 0:
+            returnval = 0
+        return returnval
+
+def narrate(message, delay, errorchance, notice): #notice should be a dictionary, how many keys elapsed since error (0 being right after typed): chance to notice, example = {0: .1, 1: .2, 2: .3, 3: .2, 4: .1}
+    #delay is a list, could be [number], ['normal', mean, sd] or ['peck', logbase, logmult, const, sd]
+    output = errorgen(message, errorchance) #get output with errors added
+    errors = []
+    noticelist = [] #converts the error detection dictionary inputs into list form to be slightly easier to handle at times
+    for x in range(0, len(output)): #generates a lists of the indeces of errors
+        if output[x] != message[x]:
+            errors.append(x)
+    for x in errors:
+        noticelist.append(x) #error detection made easier
+    x = 0
+    while x < len(message): #corrects errors until the end of the message is reached
+        if len(errors) > 0: #if there are errors
+            if x - errors[0] in notice: #if detectable
+                if random.random() <= notice[x-errors[0]]: #detects error based on programmed chances
+                    for y in range(x, (errors[0]-1), -1):
+                        print('\b \b', end='', flush=True) #backspaces 
+                        time.sleep(handledelay(delay, '\b', '\b'))
+                    if errors[0] != 0: #a bugfix for when the first letter is deleted, allows message to be fully printed otherwise
+                        sleepval = (handledelay(delay, '\b', message[errors[0]-1]) - handledelay(delay, '\b', '\b'))
+                        if sleepval <= 0:
+                            sleepval = 0
+                        time.sleep(sleepval)
+                        print(message[errors[0]-1], end='', flush=True)
+                        time.sleep(handledelay(delay, message[errors[0]-1], message[errors[0]]))
+                    for y in range(errors[0], x): #prints correct keys until x reached
+                        print(message[y], end='', flush=True)
+                        time.sleep(2*handledelay(delay, message[y], message[y+1]))
+                    leng = len(errors)
+                    for y in range(0, leng):
+                        if errors[0] <= x:
+                            errors.remove(errors[0])
+            elif x - errors[0] >= noticelist[-1]: #if first error never corrected in correctable phase, remove it (a backup) 
+                errors.remove(errors[0])
+        if x < (len(message) - 1):
+            time.sleep(handledelay(delay, output[x], output[x-1]))
+            print(output[x], end='', flush=True)
+            x += 1
+        elif x == len(message) - 1:
+            print(message[-1], end='', flush=True)
+            time.sleep(handledelay(delay, message[-1], message[-1]))
+            break
+        else:
+            break
+    keysback = 0
+    for x in range((len(errors) - 1), -1, -1):
+        if random.random() <= 1/(len(output) - errors[x]):
+            keysback = x
+    for x in range(0, keysback-1):
+        print('\b \b', end='', flush=True)
+        time.sleep(handledelay(delay, '\b', '\b'))
+    time.sleep(handledelay(delay, '\b', message[0-keysback]))
+    for x in range(len(message)-(keysback+1), len(message)-1):
+        print(message[x], end='', flush=True)
+        time.sleep(handledelay(delay, message[x], message[x+1]))
+
+narrate(input("message > "), ['peck', 3, .01, .025, 1], float(input("error chance > ")), dicts.noticepresets["2"])
