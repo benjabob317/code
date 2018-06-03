@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+import random
+
+#create new encryption 
+
+def generate_key(): #gives you a string key for encryption that you can store anywhere
+    charset = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+    delSet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+    key = ''
+    for x in charset:
+        key += x
+        random_key = random.randint(0, (len(delSet) - 1))
+        key += delSet[random_key]
+        delSet.remove(delSet[random_key])
+    return key
+
+def key_to_encrypt_dict(key): #turns key into a dictionary that can encrypt text
+    translator = {}
+    for x in range(0, 124, 2):
+        translator[key[x]] = key[x+1]
+    return translator
+
+def encrypt(message, key):
+    translator = key_to_encrypt_dict(key)
+    encrypted_message = ''
+    for x in message:
+        try:
+            encrypted_message += translator[x]
+        except KeyError:
+            print('only numbers and capital/lowercase letters allowed')
+            return 'ERROR'
+            break
+    return encrypted_message
+
+def key_to_decrypt_dict(key): #turns key into a dictionary that can decrypt text
+    translator = {}
+    for x in range(1, 125, 2):
+        translator[key[x]] = key[x-1]
+    return translator
+
+def decrypt(message, key):
+    translator = key_to_decrypt_dict(key)
+    decrypted_message = ''
+    for x in message:
+        decrypted_message += translator[x]
+    return decrypted_message
+
+key1 = generate_key()
+print(key1)
+print(key_to_encrypt_dict(key1))
+print(key_to_decrypt_dict(key1))
+print(encrypt('removekebab', key1))
+print(decrypt(encrypt('removekebab', key1), key1))
