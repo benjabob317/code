@@ -8,9 +8,9 @@ def generate_key(): #gives you a string key for encryption that you can store an
     delSet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
     key = ''
     for x in charset:
-        key += x
+        key += x #every other letter is the charset in order
         random_key = random.randint(0, (len(delSet) - 1))
-        key += delSet[random_key]
+        key += delSet[random_key] #every other letter is a random key from the charset
         delSet.remove(delSet[random_key])
     return key
 
@@ -27,7 +27,7 @@ def encrypt(message, key):
         try:
             encrypted_message += translator[x]
         except KeyError:
-            print('only numbers and capital/lowercase letters allowed')
+            print('only numbers and letters allowed')
             return 'ERROR'
             break
     return encrypted_message
