@@ -1,0 +1,100 @@
+{
+    "version": "1.0",
+    "encoding": "UTF-8",
+    "feed": {
+      "xmlns": "http:\/\/www.w3.org\/2005\/Atom",
+      "xmlns$openSearch": "http:\/\/a9.com\/-\/spec\/opensearchrss\/1.0\/",
+      "xmlns$gsx": "http:\/\/schemas.google.com\/spreadsheets\/2006\/extended",
+      "id": {
+        "$t": "https:\/\/spreadsheets.google.com\/feeds\/list\/1VJQxxS7hVDB7_2uSZCXazPgyNEM80-8BeMIbG6EQbHk\/default\/public\/values"
+      },
+      "updated": {
+        "$t": "2018-05-26T23:31:13.083Z"
+      },
+      "category": [
+        {
+          "scheme": "http:\/\/schemas.google.com\/spreadsheets\/2006",
+          "term": "http:\/\/schemas.google.com\/spreadsheets\/2006#list"
+        }
+      ],
+      "title": {
+        "type": "text",
+        "$t": "Sheet1"
+      },
+      "link": [
+        {
+          "rel": "alternate",
+          "type": "application\/atom+xml",
+          "href": "https:\/\/docs.google.com\/spreadsheets\/d\/1VJQxxS7hVDB7_2uSZCXazPgyNEM80-8BeMIbG6EQbHk\/pubhtml"
+        },
+        {
+          "rel": "http:\/\/schemas.google.com\/g\/2005#feed",
+          "type": "application\/atom+xml",
+          "href": "https:\/\/spreadsheets.google.com\/feeds\/list\/1VJQxxS7hVDB7_2uSZCXazPgyNEM80-8BeMIbG6EQbHk\/default\/public\/values"
+        },
+        {
+          "rel": "http:\/\/schemas.google.com\/g\/2005#post",
+          "type": "application\/atom+xml",
+          "href": "https:\/\/spreadsheets.google.com\/feeds\/list\/1VJQxxS7hVDB7_2uSZCXazPgyNEM80-8BeMIbG6EQbHk\/default\/public\/values"
+        },
+        {
+          "rel": "self",
+          "type": "application\/atom+xml",
+          "href": "https:\/\/spreadsheets.google.com\/feeds\/list\/1VJQxxS7hVDB7_2uSZCXazPgyNEM80-8BeMIbG6EQbHk\/default\/public\/values?alt=json"
+        }
+      ],
+      "author": [
+        {
+          "name": {
+            "$t": "benjamintheepic"
+          },
+          "email": {
+            "$t": "benjamintheepic@gmail.com"
+          }
+        }
+      ],
+      "openSearch$totalResults": {
+        "$t": "1"
+      },
+      "openSearch$startIndex": {
+        "$t": "1"
+      },
+      "entry": [
+        {
+          "id": {
+            "$t": "https:\/\/spreadsheets.google.com\/feeds\/list\/1VJQxxS7hVDB7_2uSZCXazPgyNEM80-8BeMIbG6EQbHk\/default\/public\/values\/cokwr"
+          },
+          "updated": {
+            "$t": "2018-05-26T23:31:13.083Z"
+          },
+          "category": [
+            {
+              "scheme": "http:\/\/schemas.google.com\/spreadsheets\/2006",
+              "term": "http:\/\/schemas.google.com\/spreadsheets\/2006#list"
+            }
+          ],
+          "title": {
+            "type": "text",
+            "$t": "d"
+          },
+          "content": {
+            "type": "text",
+            "$t": ""
+          },
+          "link": [
+            {
+              "rel": "self",
+              "type": "application\/atom+xml",
+              "href": "https:\/\/spreadsheets.google.com\/feeds\/list\/1VJQxxS7hVDB7_2uSZCXazPgyNEM80-8BeMIbG6EQbHk\/default\/public\/values\/cokwr"
+            }
+          ],
+          "gsx$a": {
+            "$t": "d"
+          },
+          "gsx$b": {
+            "$t": ""
+          }
+        }
+      ]
+    }
+  }

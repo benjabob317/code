@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+import tkinter
+import time
+tk = tkinter.Tk() #important
+canvas = tkinter.Canvas(tk, width=500, height=500)
+canvas.pack()
+
+main = canvas.create_oval(10, 10, 100, 150) #assigns the id to main variable
+
+for x in range(0, 60):
+    canvas.move(main, 1, 2) #moves object with id 1 1 pixel to the right and 2 pixels down
+    canvas.update() #required to register
+    time.sleep(0.05)
+for x in range(0, 60): #moves it back
+    canvas.move(main, -1, -2)
+    canvas.update()
+    time.sleep(0.05)
+tkinter.mainloop() #keeps program alive
