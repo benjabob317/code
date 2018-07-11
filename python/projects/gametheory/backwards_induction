@@ -15,6 +15,12 @@ tree = {
         }
     }
 }
-def deepest_outcome(scenario):
-    pass
+
+x = tree
+for i in list(x.keys()):
+    if isinstance(i, dict):
+
+
+for x in list(trees.keys()):
+    if isinstance(x, dict):
 print(list(tree.keys()))
