@@ -1,6 +1,0 @@
-#!/usr/bin/env python3
-import urllib.request
-url = input("reddit url > ")
-site = urllib.request.urlopen(url)
-html = str(site.read())
-print("i.imgur.com" + html.split("i.imgur.com")[1].split('"')[0])

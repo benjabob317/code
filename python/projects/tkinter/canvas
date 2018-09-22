@@ -1,7 +1,0 @@
-#!/usr/bin/env python3
-import tkinter
-import time
-tk = tkinter.Tk() #important
-canvas = tkinter.Canvas(tk, width=500, height=500)
-canvas.pack()
-tkinter.mainloop() #keeps program alive
