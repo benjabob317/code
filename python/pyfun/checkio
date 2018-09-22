@@ -1,4 +1,0 @@
-#!/usr/bin/env python3
-def sortlistbyfreq(list):
-    return sorted(l, key=lambda x: -l.count(x))
-    
