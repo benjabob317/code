@@ -2,7 +2,7 @@
 import skilstak.colors as c
 import sys
 from time import sleep
-print(c.r + "Welcome to the cipher program!" + c.x)
+print('\x1b[31m' + "Welcome to the cipher program!" + '\x1b[0;0m')
 message = ''
 key = {
         "a": "|",
