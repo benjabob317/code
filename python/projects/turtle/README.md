@@ -2,6 +2,6 @@
 
 A simple emulator of the python turtle for the terminal written in curses.
 
-###Core functions
+### Core functions
 * turn
 * forward
