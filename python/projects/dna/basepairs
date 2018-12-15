@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import data
-def basepair(strand, strand_type, new_strand_type):
+def basepair(strand, strand_type, new_strand_type): #Converts a strand of nucleotides into its base pairs based on the starting and finishing type
     if strand_type.lower() == 'dna':
         if new_strand_type.lower() == 'dna':
             conversion = data.dna_basepair
