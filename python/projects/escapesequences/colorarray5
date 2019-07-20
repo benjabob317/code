@@ -19,19 +19,46 @@ def instant_colortable(constantcolor, constantvalue):
     if constantcolor == 'r':
         for b in range(0, 6):
             for g in range(0, 6):
-                print(text5(constantvalue, g, b) + 'O' + '\x1b[0;0m' + ' ', end='')
+                print(text5(constantvalue, g, b) + f"{16+(constantvalue*36)+(g*6)+b}" + '\x1b[0;0m' + ' ', end=' '*(len(f"{16+(constantvalue*36)+(g*6)+b}") - 1))
             print()
     elif constantcolor == 'g':
         for b in range(0, 6):
             for r in range(0, 6):
-                print(text5(r, constantvalue, b) + 'O' + '\x1b[0;0m' + ' ', end='')
+                print(text5(r, constantvalue, b) + f"{16+(r*36)+(constantvalue*6)+b}" + '\x1b[0;0m' + ' ', end='')
             print()
     elif constantcolor == 'b':
         for g in range(0, 6):
             for r in range(0, 6):
-                print(text5(r, g, constantvalue) + 'O' + '\x1b[0;0m' + ' ', end='')
+                print(text5(r, g, constantvalue) + f"{16+(r*36)+(g*6)+constantvalue}" + '\x1b[0;0m' + ' ', end=' '*(3-(len(f"{16+(r*36)+(g*6)+constantvalue}"))))
             print()
 
+def instant_color_rows_array():
+    array = []
+    for b in range(0, 6):
+        array.append([])
+        for g in range(0, 6):
+            array[-1].append([])
+            for r in range(0, 6):
+                array[-1][-1].append(text5(r, g, b) + f"{16+(r*36)+(g*6)+b}" + '\x1b[0;0m' + ' ' + ' '*(3-(len(f"{16+(r*36)+(g*6)+b}"))))
+    print('\\033[38;5;'+ 'NUMBER' + 'm')
+    for b in range(0, 6):
+        print()
+        for r in range(0, 6):
+            for g in range(0, 6):
+                print(array[b][g][r], end='')
+
+def instant_color_rows():
+    print('\\033[38;5;'+ 'NUMBER' + 'm', end='')
+    for b in range(0, 6):
+        print()
+        for r in range(0, 6):
+            for g in range(0, 6):
+                print(text5(r, g, b) + f"{16+(r*36)+(g*6)+b}" + '\x1b[0;0m' + ' ', end='')
+
+
+
 if __name__ == "__main__":
-    for x in range(0, 6):
-        instant_colortable('b', x)
+    """for x in range(0, 6):
+        instant_colortable('b', x)"""
+    instant_color_rows()
+    
